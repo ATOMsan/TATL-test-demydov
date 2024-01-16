@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import { selectTableColumns } from "../../store/table/tableSlice";
+import { useAppDispatch, useAppSelector } from "store/store";
+import { selectTableColumns } from "store/table/tableSlice";
 import {
   addStudentRateValue,
   fetchColumns,
   fetchStudentsData,
   removeStudentRateValue,
-} from "../../store/table/tableThunk";
-import { ContentData, TableComponent } from "components/TableComponent";
+} from "store/table/tableThunk";
+import { TableComponent } from "components/TableComponent";
 import { selectStudentsData } from "store/table/studentSlice";
-import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { StudentId } from "api/apiTypes";
 import CircularIndeterminate from "components/Loader";
 import { ButtonComponent } from "components/Button";
 
-type ColumnItem = {
-  id: string | number;
-  Title: string | number;
+export type ColumnItem = {
+  id: number;
+  Title: string;
   Rate: StudentId[];
 };
 
@@ -82,7 +82,7 @@ function Students() {
             return (
               <ButtonComponent
                 onButtonChange={() => onButtonChange(studentRate)}
-              > 
+              >
                 {value?.Title ? value?.Title : ""}
               </ButtonComponent>
             );
@@ -97,12 +97,7 @@ function Students() {
   }, [columnsData, onButtonChange]);
 
   if (columns && studentsData) {
-    return (
-      <TableComponent
-        columns={columns as ColumnDef<ContentData, any>[]}
-        contentData={studentsData}
-      />
-    );
+    return <TableComponent columns={columns} contentData={studentsData} />;
   }
   return <CircularIndeterminate />;
 }

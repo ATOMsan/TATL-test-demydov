@@ -2,7 +2,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AppRouting } from "Routse/Routse";
+import { AppRouting } from "Router/router";
 import { Suspense } from "react";
 import CircularIndeterminate from "components/Loader";
 

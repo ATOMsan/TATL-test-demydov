@@ -53,7 +53,7 @@ export const selectStudentsData = createSelector(getStudentsStore, (state) => {
       return {
         Title: studentName,
         id: student.Id,
-        Rate: rateData,
+        Rate: rateData || [],
       };
     });
     return studentsData;

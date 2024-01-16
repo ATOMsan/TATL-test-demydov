@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Paper,
   Table,
@@ -14,27 +14,21 @@ import {
   flexRender,
   ColumnDef,
 } from "@tanstack/react-table";
-import { StudentId } from "api/apiTypes";
 
-export type ContentData = {
-  Title: string;
-  id: number;
-  Rate?: StudentId[];
+type TableProps<T> = {
+  columns: ColumnDef<T, any>[];
+  contentData: T[];
 };
 
-type TableProps = {
-  columns: ColumnDef<ContentData, any>[];
-  contentData: ContentData[];
-};
-
-export const TableComponent: React.FC<TableProps> = ({
+export const TableComponent = <T extends unknown>({
   columns,
   contentData,
-}) => {
+}: TableProps<T>) => {
   const table = useReactTable({
     columns,
     data: contentData,
     getCoreRowModel: getCoreRowModel(),
+    autoResetAll: false,
   });
 
   return (

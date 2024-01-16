@@ -5,6 +5,6 @@ export function ErrorBoundary() {
   return isRouteErrorResponse(error) ? (
     <h1 style={{ textAlign: "center" }}>{error.status} Сталась помилка!</h1>
   ) : (
-    <h1>Сталась помилка!</h1>
+    <h1 style={{ textAlign: "center" }}>Сталась помилка!</h1>
   );
 }
