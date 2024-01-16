@@ -7,14 +7,14 @@ import {
   fetchStudentsData,
   removeStudentRateValue,
 } from "../../store/table/tableThunk";
-import { TableComponent } from "components/TableComponent";
+import { ContentData, TableComponent } from "components/TableComponent";
 import { selectStudentsData } from "store/table/studentSlice";
-import { createColumnHelper } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { StudentId } from "api/apiTypes";
 import CircularIndeterminate from "components/Loader";
 import { ButtonComponent } from "components/Button";
 
-export type ColumnItem = {
+type ColumnItem = {
   id: string | number;
   Title: string | number;
   Rate: StudentId[];
@@ -48,13 +48,16 @@ function Students() {
     }
   }, [columnsData, dispatch]);
 
-  const onButtonChange = useCallback((studentRate: StudentId) => {
-    if (!studentRate.Id) {
-      dispatch(addStudentRateValue(studentRate));
-    } else {
-      dispatch(removeStudentRateValue(studentRate));
-    }
-  }, []);
+  const onButtonChange = useCallback(
+    (studentRate: StudentId) => {
+      if (!studentRate.Id) {
+        dispatch(addStudentRateValue(studentRate));
+      } else {
+        dispatch(removeStudentRateValue(studentRate));
+      }
+    },
+    [dispatch]
+  );
 
   const columns = useMemo(() => {
     if (columnsData) {
@@ -79,7 +82,7 @@ function Students() {
             return (
               <ButtonComponent
                 onButtonChange={() => onButtonChange(studentRate)}
-              >
+              > 
                 {value?.Title ? value?.Title : ""}
               </ButtonComponent>
             );
@@ -94,7 +97,12 @@ function Students() {
   }, [columnsData, onButtonChange]);
 
   if (columns && studentsData) {
-    return <TableComponent columns={columns} contentData={studentsData} />;
+    return (
+      <TableComponent
+        columns={columns as ColumnDef<ContentData, any>[]}
+        contentData={studentsData}
+      />
+    );
   }
   return <CircularIndeterminate />;
 }

@@ -12,16 +12,18 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
+  ColumnDef,
 } from "@tanstack/react-table";
 import { StudentId } from "api/apiTypes";
-type ContentData = {
+
+export type ContentData = {
   Title: string;
   id: number;
   Rate?: StudentId[];
 };
 
 type TableProps = {
-  columns: any;
+  columns: ColumnDef<ContentData, any>[];
   contentData: ContentData[];
 };
 
@@ -29,7 +31,6 @@ export const TableComponent: React.FC<TableProps> = ({
   columns,
   contentData,
 }) => {
-  console.log(columns);
   const table = useReactTable({
     columns,
     data: contentData,
